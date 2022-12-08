@@ -1,0 +1,26 @@
+---
+- name: Create NIM backup for clients
+  hosts: all
+  collections: 
+    - ibm.power_aix
+  vars_files:
+    - "./vars/nim_mksysb_list.yaml"
+    - "./vars/nim_master.yaml"
+  vars:
+    cur_time: "{{ ansible_date_time.iso8601_basic_short }}"
+  tasks:
+  - name: Create mksysb image
+    vars:
+      postfixtime: "_mksysb_{{ cur_time }}"
+    nim_backup:
+      action: create
+      type: mksysb
+      targets: "{{ item.name }}"
+      name_postfix: "{{ postfixtime }}"
+    register: mksysb_result
+    loop: "{{ nim_client }}"
+    when: inventory_hostname == nim_master.name
+
+  - name: Display the result of mksysb
+    debug:
+      msg: "{{ mksysb_result }}"

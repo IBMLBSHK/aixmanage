@@ -1,0 +1,5 @@
+---
+- name: list the users
+  hosts: aix
+  roles:
+    - userman

@@ -1,0 +1,20 @@
+---
+- name: List the users
+  shell: |
+    lsuser -f -a id pgrp groups ALL
+  register: lsuser_result
+  notify: "Display result"
+  tags: lsuser
+
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+    password: "{{ item.pw | password_hash('sha512') }}"
+    comment: "{{ item.name }} user account"
+    home: '/home/{{ item.name }}'
+  loop: "{{ users }}"
+  tags: add_user
+

@@ -1,0 +1,24 @@
+---
+- name: NIM management
+  hosts: aix
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+  tasks:
+  - name: List the mksysb image
+    shell: |
+      /usr/sbin/lsnim -t mksysb | awk '{ print $1 }'
+    register: lsnim_result
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient
+  
+  - name: Out to file
+    copy:
+      content: "{{ lsnim_result }}"
+      dest: "./mksysb_list.json"
+    delegate_to: 127.0.0.1
+
+    #- name: display output
+    #debug:
+    #  msg: "{{ lsnim_result }}"
+

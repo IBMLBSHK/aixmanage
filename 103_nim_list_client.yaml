@@ -1,0 +1,20 @@
+---
+- name: NIM management
+  hosts: aix
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+  tasks:
+  - name: List the nim clients
+    shell: |
+      /usr/sbin/lsnim -t standalone
+    register: lsnim_result
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient
+  
+  - name: Display lsnim nim clients
+    debug:
+      msg: "{{ item }}"
+    loop: "{{ lsnim_result.stdout_lines }}"
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient

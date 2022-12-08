@@ -1,0 +1,5 @@
+---
+# handlers file for userman
+- name: Display result
+  debug:
+    msg: "{{ lsuser_result.stdout }}"

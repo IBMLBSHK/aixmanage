@@ -1,0 +1,21 @@
+---
+- name: Create user by prompt
+  hosts: all
+  gather_facts: no
+  vars_prompt:
+    - name: username
+      prompt: "Please input your user name:"
+      private: no
+    - name: password
+      prompt: "Please provide the password:"
+      private: yes
+    - name: password_ver
+      prompt: "Please input the password again for verificaiton:"
+
+  tasks:
+    - debug:
+        msg: 'The user name is {{ username }} with password {{ password }}'
+      when: password == password_ver
+    - debug:
+        msg: 'The inputed password are not the same, please try again'
+      when: password != password_ver

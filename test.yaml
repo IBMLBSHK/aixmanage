@@ -1,0 +1,10 @@
+---
+- name: create new menu
+  hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: display menu
+    pause:
+      prompt:
+         " this is menu "
+

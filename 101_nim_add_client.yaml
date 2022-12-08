@@ -1,0 +1,51 @@
+---
+- name: NIM management
+  hosts: aix
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+    - "./vars/nim_client.yaml"
+  tasks:
+  - name: Check and add master nim server address in /etc/hosts of client servers
+    lineinfile:
+      dest: /etc/hosts
+      line: "{{ nim_master.ipaddr }} {{ nim_master.name }}"
+      state: present
+    when: inventory_hostname == item.name
+    loop: "{{ nim_client }}"
+    tags: add_hosts
+
+  - name: Check if the client server added in master server /etc/hosts
+    lineinfile:
+      dest: /etc/hosts
+      line: "{{ item.ipaddr }} {{ item.name }}"
+      state: present
+      backup: yes
+    loop: "{{ nim_client }}"
+    when: inventory_hostname == nim_master.name
+    tags: add_hosts
+
+  - name: Add the nim clients using nimint command
+    vars:
+      nimmaster: "{{ nim_master.name }}"
+    shell: |
+      /usr/sbin/niminit -a name={{ item.name }} -a master={{ nimmaster }} -a pif_name={{ item.ifen }} -a platform=chrp -a connect=nimsh -a netboot_kernel=up
+      #    debug:
+      #msg: "/usr/sbin/niminit -a name={{ item.name }} -a master={{ nimmaster }} -a pif_name={{ item.ifen }} -a platform=chrp -a connect=nimsh -a netboot_kernel=up"
+    when: inventory_hostname == item.name 
+    loop: "{{ nim_client }}"
+    tags: add_nim
+
+  - name: List the nim clients
+    shell: |
+      /usr/sbin/lsnim -t standalone
+    register: lsnim_result
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient
+  
+  - name: Display lsnim nim clients
+    debug:
+      msg: "{{ item }}"
+    loop: "{{ lsnim_result.stdout_lines }}"
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient

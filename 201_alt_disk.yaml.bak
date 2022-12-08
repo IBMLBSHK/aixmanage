@@ -1,0 +1,24 @@
+---
+- name: alt disk 
+  hosts: aix
+  gather_facts: no
+  tasks:
+  - name: Create alt disk
+    ibm.power_aix.alt_disk:
+      action: copy
+      force: yes
+      targets: hdisk4
+    register: alt_result
+
+  - set_fact:
+      alt_re={{ alt_result.stdout }}
+
+  - name: Display the results
+    debug:
+      var=alt_re
+
+  - name: Out to file
+    copy:
+      content: "{{ alt_re }}"
+      dest: "./alt_disk_result.json"
+    delegate_to: 127.0.0.1

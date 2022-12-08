@@ -1,0 +1,10 @@
+---
+- name: User management
+  hosts: aix
+  gather_facts: no
+  tasks:
+  - name: Create users
+    import_role:
+      name: userman
+    tags: 
+      - add_user

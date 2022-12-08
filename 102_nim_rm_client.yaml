@@ -1,0 +1,30 @@
+---
+- name: NIM management
+  hosts: aix
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+    - "./vars/nim_rm_list.yaml"
+  tasks:
+  - name: Remove nim client by command
+    vars:
+      nimmaster: "{{ nim_master.name }}"
+    shell: |
+      /usr/sbin/nim -o remove {{ item.name }}
+    when: inventory_hostname == nim_master.name
+    loop: "{{ nim_rm_client }}"
+    tags: rm_nim
+
+  - name: List the nim clients
+    shell: |
+      /usr/sbin/lsnim -t standalone
+    register: lsnim_result
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient
+  
+  - name: Display lsnim nim clients
+    debug:
+      msg: "{{ item }}"
+    loop: "{{ lsnim_result.stdout_lines }}"
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient

@@ -1,0 +1,9 @@
+---
+# vars file for userman
+users:
+  - name: ivanng
+    pw: ivnang
+    uid: 2001
+  - name: anthonywg
+    pw: anthony
+    uid: 2002
