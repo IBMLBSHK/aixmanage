@@ -1,0 +1,71 @@
+---
+- name: NIM management
+  hosts: nimserver
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+    - "./vars/mksysb_list.yaml"
+  tasks:
+  - name: Make a list of mksysb images in nim server
+    include_tasks: tasks/list_mksysb.yaml
+    
+  - pause:
+      prompt: |-
+        Delete mksysb options:
+        =====================================
+        {% for i in mksysb %}
+        {{ i.option }} - {{ i.name }}
+        {% endfor %}
+      echo: yes
+    register: result 
+    #when: inventory_hostname == nim_master.name
+    #delegate_to: localhost
+
+  - set_fact:
+      mksysb_option: "{{ result.user_input }}"
+
+  - name: display input
+    debug:
+      msg: "{{ mksysb_option|int - 1 }}"
+    delegate_to: 127.0.0.1
+
+    #- name: Invalid option (input number please)
+    #debug:
+    #  msg: "Do not delete mksysb image since option invalid (not a number)"
+    #failed_when:  mksysb_option is string
+    #delegate_to: 127.0.0.1
+
+  - name: Invalid option to delete mksysb
+    debug:
+      msg: "Do not delete mksysb image since option invalid (not in menu range)"
+    failed_when: mksysb_option|int > mksysb|length or mksysb_option|int == 0
+    delegate_to: 127.0.0.1
+
+  - pause:
+      prompt: |-
+        Do you want to delete {{ mksysb[mksysb_option|int - 1].name }} (yes/no)?
+      echo: yes
+    register: boolen_mksysb
+  
+  - name: Start to delete the mksysb 
+    ibm.power_aix.nim_resource:
+      action: delete
+      object_type: mksysb
+      name: "{{ mksysb[mksysb_option|int - 1].name }}"
+    when: boolen_mksysb.user_input | bool and mksysb_option|int -1 <  mksysb|length
+
+  - name: Deny to delete mksysb
+    debug:
+      msg: "Do not delete mksysb image since do not choose 'yes' to confirm "
+    when: not boolen_mksysb.user_input | bool 
+  
+    #- name: change to readable format
+  #
+  #  shell: |
+  #    cat "./logfile/mksysb_list.json" | jq > ./logfile/mksysb_list.log
+  #  delegate_to: 127.0.0.1
+
+    #- name: display output
+    #debug:
+    #  msg: "{{ lsnim_result }}"
+

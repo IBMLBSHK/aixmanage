@@ -24,7 +24,7 @@
       create_alt_time: "alt_create_{{ cur_time }}.log"
     copy:
       content: "{{ item.stdout }}"
-      dest: "{{ item.item.name }}_{{ create_alt_time }}"
+      dest: "./logfile/{{ item.item.name }}_{{ create_alt_time }}"
       owner: ansiadm
       group: ansiadm
     when: item.item.name == inventory_hostname

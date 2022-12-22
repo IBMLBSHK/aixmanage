@@ -1,0 +1,28 @@
+---
+- name: NIM management
+  hosts: aix
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+    - "./vars/mksysb_list.yaml"
+  tasks:
+  - pause:
+      prompt: |-
+        Delete mksysb options:
+        =====================================
+        {% for i in mksysb %}
+        {{ i.option }} - {{ i.name }}
+        {% endfor %}
+    register: main_input
+    loop: "{{ mksysb }}"
+    delegate_to: 127.0.0.1
+
+  #- name: change to readable format
+  #  shell: |
+  #    cat "./logfile/mksysb_list.json" | jq > ./logfile/mksysb_list.log
+  #  delegate_to: 127.0.0.1
+
+    #- name: display output
+    #debug:
+    #  msg: "{{ lsnim_result }}"
+

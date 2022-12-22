@@ -1,0 +1,29 @@
+---
+- name: NIM management
+  hosts: aix
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+  tasks:
+  - name: List the mksysb image
+    ibm.power_aix.nim_resource:
+      action: show
+      object_type: mksysb
+    register: lsnim_result
+    when: inventory_hostname == nim_master.name
+    tags: list_nimclient
+  
+   #- name: Out to file
+    #lineinfile:
+    #  line: "{{ item }}"
+    #  path: "./logfile/mksysb_list.log"
+    #  create: yes
+    #loop: "{{ lsnim_result.stdout_lines }}"
+    #delegate_to: 127.0.0.1
+    #when: inventory_hostname == nim_master.name
+
+  - name: display output
+    debug:
+      msg: "{{ lsnim_result.stdout_lines }}"
+    when: inventory_hostname == nim_master.name
+

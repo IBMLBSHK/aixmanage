@@ -1,0 +1,48 @@
+---
+- name: NIM management
+  hosts: nimserver
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+    - "./vars/mksysb_list.yaml"
+  tasks:
+  - name: Make a list of mksysb images in nim server
+    include_tasks: tasks/list_mksysb.yml
+    
+  - pause:
+      prompt: |-
+        Delete mksysb options:
+        =====================================
+        {% for i in mksysb %}
+        {{ i.option }} - {{ i.name }}
+        {% endfor %}
+      echo: yes
+    register: result 
+    #when: inventory_hostname == nim_master.name
+    #delegate_to: localhost
+
+  - set_fact:
+      mksysb_option: "{{ result.user_input }}"
+
+  vars_prompt: 
+    - name: boolen_mksysb
+      prompt: "Do you want to delete {{ mksysb[mksysb_option|int].name }} (yes/no)?"
+      private: no
+  
+  tasks:
+  - name: Delete the mksysb 
+    ibm.power_aix.nim_resource:
+      action: delete
+      object_type: mksysb
+      name: "{{ mksysb[mksysb_option|int].name }}"
+    when: boolen_mksysb | bool
+
+  #- name: change to readable format
+  #  shell: |
+  #    cat "./logfile/mksysb_list.json" | jq > ./logfile/mksysb_list.log
+  #  delegate_to: 127.0.0.1
+
+    #- name: display output
+    #debug:
+    #  msg: "{{ lsnim_result }}"
+
