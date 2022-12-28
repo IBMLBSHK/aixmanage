@@ -1,0 +1,13 @@
+---
+- name: NIM management
+  hosts: nimserver
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+  tasks:
+  - name: Output the spot list to file ./vars/list_spot.yaml and ./logfile/list_spot.json
+    include_tasks: tasks/list_spot.yaml
+
+  - debug:
+      var: lsspot_result.stdout_lines
+    delegate_to: 127.0.0.1

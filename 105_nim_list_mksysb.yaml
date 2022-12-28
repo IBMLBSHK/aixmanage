@@ -5,16 +5,9 @@
   vars_files:
     - "./vars/nim_master.yaml"
   tasks:
-  - name: Output the mksysb list to file ./vars/nim_master.yaml
+  - name: Output the mksysb list to file ./vars/mksysb_list.yaml and ./logfile/mksysb_list.json
     include_tasks: tasks/list_mksysb.yaml
-
-    #- name: Display the mksysb images
-    #shell: |
-    #  cat "./vars/mksysb_list.yaml" 
-    #register: mksysb_list
-    #delegate_to: 127.0.0.1
 
   - debug:
       var: lsnim_result.stdout_lines
     delegate_to: 127.0.0.1
-      #when: inventory_hostname in groups.nimserver

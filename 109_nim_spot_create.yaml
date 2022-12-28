@@ -16,7 +16,7 @@
 
   - pause:
       prompt: |-
-        Delete mksysb options:
+        Please choose which  mksysb to create spot options:
         =====================================
         {% for i in mksysb %}
         {{ i.option }} - {{ i.name }}
@@ -34,7 +34,7 @@
       msg: "{{ mksysb_option|int - 1 }}"
     delegate_to: 127.0.0.1
 
-  - name: Invalid option to delete mksysb
+  - name: Invalid option to choose mksysb
     debug:
       msg: "Do not delete mksysb image since option invalid (not in menu range)"
     failed_when: mksysb_option|int > mksysb|length or mksysb_option|int == 0
@@ -42,25 +42,25 @@
 
   - pause:
       prompt: |-
-        Do you want to delete {{ mksysb[mksysb_option|int - 1].name }} (yes/no)?
+        Do you really want to create spot from {{ mksysb[mksysb_option|int - 1].name }} (yes/no)?
       echo: yes
     register: boolen_mksysb
   
-  - name: Start to delete the mksysb 
+  - name: Start to create spot from the mksysb {{ mksysb[mksysb_option|int - 1].name }}
+    vars:
+      spot_name: "{{ mksysb[mksysb_option|int - 1].name | replace('mksysb','spot') }}" 
     ibm.power_aix.nim_resource:
-      action: delete
-      object_type: mksysb
-      name: "{{ mksysb[mksysb_option|int - 1].name }}"
+      action: create
+      object_type: spot
+      name: "{{ spot_name }}"
+      attributes:
+        source: "{{ mksysb[mksysb_option|int - 1].name }}"
+        location: '/export/nim/spot/{{ spot_name }}'
+    register: spot_result 
     when: boolen_mksysb.user_input | bool and mksysb_option|int -1 <  mksysb|length
 
-  - name: Deny to delete mksysb
+  - name: Deny to create spot from mksysb
     debug:
-      msg: "Do not delete mksysb image since do not choose 'yes' to confirm "
+      msg: "Do not create spot since do not choose 'yes' to confirm "
     when: not boolen_mksysb.user_input | bool 
   
-    #- name: change to readable format
-  #
-  #  shell: |
-  #    cat "./logfile/mksysb_list.json" | jq > ./logfile/mksysb_list.log
-  #  delegate_to: 127.0.0.1
-

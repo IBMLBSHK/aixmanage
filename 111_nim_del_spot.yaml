@@ -1,0 +1,66 @@
+---
+- name: NIM management
+  hosts: nimserver
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+    - "./vars/spot_list.yaml"
+  tasks:
+  - name: Make a list of spot images in nim server
+    include_tasks: tasks/list_spot.yaml
+    
+  - name: Check the list spot images exist
+    debug:
+      msg: "There is no spot images in NIM server"
+    failed_when: spot|length == 0
+
+  - pause:
+      prompt: |-
+        Delete spot options:
+        =====================================
+        {% for i in spot %}
+        {{ i.option }} - {{ i.name }}
+        {% endfor %}
+      echo: yes
+    register: result 
+    #when: inventory_hostname == nim_master.name
+    #delegate_to: localhost
+
+  - set_fact:
+      spot_option: "{{ result.user_input }}"
+
+  - name: display input
+    debug:
+      msg: "{{ spot_option|int - 1 }}"
+    delegate_to: 127.0.0.1
+
+  - name: Invalid option to delete spot
+    debug:
+      msg: "Do not delete spot image since option invalid (not in menu range)"
+    failed_when: spot_option|int > spot|length or spot_option|int == 0
+    delegate_to: 127.0.0.1
+
+  - pause:
+      prompt: |-
+        Do you want to delete {{ spot[spot_option|int - 1].name }} (yes/no)?
+      echo: yes
+    register: boolen_spot
+  
+  - name: Start to delete the spot 
+    ibm.power_aix.nim_resource:
+      action: delete
+      object_type: spot
+      name: "{{ spot[spot_option|int - 1].name }}"
+    when: boolen_spot.user_input | bool and spot_option|int -1 <  spot|length
+
+  - name: Start to delete the spot directory
+    file:
+      path: '/export/nim/spot/{{ spot[spot_option|int - 1].name }}'
+      state: absent
+    when: boolen_spot.user_input | bool and spot_option|int -1 <  spot|length
+
+  - name: Deny to delete spot
+    debug:
+      msg: "Do not delete spot image since do not choose 'yes' to confirm "
+    when: not boolen_spot.user_input | bool 
+  
