@@ -1,0 +1,14 @@
+---
+- name: NIM management
+  hosts: nimserver
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+  tasks:
+  - name: Output the lpp_resource list to file ./vars/list_lpp.yaml and ./logfile/list_lpp.json
+    include_tasks: tasks/list_lpp.yaml
+
+  - debug:
+      msg: "{{ lslpp_result.stdout_lines }}"
+    when: lslpp_result.stdout_lines 
+    delegate_to: 127.0.0.1

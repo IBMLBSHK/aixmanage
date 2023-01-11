@@ -1,28 +1,27 @@
 # AIX management ansible tools target include
 
-1. User management (role: userman)
+1. User management 
     - List user
     - Add user
     - Delete user
     - Assign user to group
-2. PAM management (role: pamman)
+2. PAM management
     - Reset password
     - Reset login count
     - Set password requirement
-3. LVM management (role: lvmman)
+3. LVM management 
     - Create / delete / import VG
     - Create / delete LV
     - Create / delete / mount / unmount FS
-4. NIM management (role: nimman)
-    - Add NIM client
-    - Configure Lpp Soure / Spot / mksysb / savevg
-    - Backup / Restore AIX
-    - Backup / Restore VIOS
+4. NIM management
+    - Add / Remove NIM client
+    - Create / Delete / List Lpp Soure / Spot / mksysb / savevg
+    - Create / Delete / List VIOS mksysb
     - Update / Upgrade OS version / patch
-5. File management (role: fileman)
-    - Check file consistent (sha1sum)
+5. File management
+    - Check file consistent
     - Sync files
-6. Disk clone management (role: diskman)
+6. Disk clone management
     - Alt disk clone
     - Mirror disk
     - Unmirror disk

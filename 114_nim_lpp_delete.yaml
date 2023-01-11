@@ -1,0 +1,66 @@
+---
+- name: NIM management
+  hosts: nimserver
+  gather_facts: no
+  vars_files:
+    - "./vars/nim_master.yaml"
+    - "./vars/lpp_list.yaml"
+  tasks:
+  - name: Make a list of lpp images in nim server
+    include_tasks: tasks/list_lpp.yaml
+    
+  - name: Check the list lpp resource exist
+    debug:
+      msg: "There is no lpp resource in NIM server"
+    failed_when: lpp|length == 0
+
+  - pause:
+      prompt: |-
+        Delete lpp options:
+        =====================================
+        {% for i in lpp %}
+        {{ i.option }} - {{ i.name }}
+        {% endfor %}
+      echo: yes
+    register: result 
+    #when: inventory_hostname == nim_master.name
+    #delegate_to: localhost
+
+  - set_fact:
+      lpp_option: "{{ result.user_input }}"
+
+  - name: display input
+    debug:
+      msg: "{{ lpp_option|int - 1 }}"
+    delegate_to: 127.0.0.1
+
+  - name: Invalid option to delete lpp resource
+    debug:
+      msg: "Do not delete lpp image since option invalid (not in menu range)"
+    failed_when: lpp_option|int > lpp|length or lpp_option|int == 0
+    delegate_to: 127.0.0.1
+
+  - pause:
+      prompt: |-
+        Do you want to delete {{ lpp[lpp_option|int - 1].name }} (yes/no)?
+      echo: yes
+    register: boolen_lpp
+  
+  - name: Start to delete the lpp 
+    ibm.power_aix.nim_resource:
+      action: delete
+      object_type: lpp_source
+      name: "{{ lpp[lpp_option|int - 1].name }}"
+    when: boolen_lpp.user_input | bool and lpp_option|int -1 <  lpp|length
+
+  - name: Start to delete the lpp directory
+    file:
+      path: '/export/nim/lpp/{{ lpp[lpp_option|int - 1].name }}'
+      state: absent
+    when: boolen_lpp.user_input | bool and lpp_option|int -1 <  lpp|length
+
+  - name: Deny to delete lpp
+    debug:
+      msg: "Do not delete lpp image since do not choose 'yes' to confirm "
+    when: not boolen_lpp.user_input | bool 
+  
