@@ -32405,3 +32405,507 @@ core/2.13/reference_appendices/interpreter_discovery.html for more information.
 }
 2023-01-11 10:26:54,451 p=4025273 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
 2023-01-11 10:26:54,451 p=4025273 u=ansiadm n=ansible | Anthony_nimserver          : ok=6    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-01-11 11:17:40,482 p=4082055 u=ansiadm n=ansible | PLAY [Create NIM backup for clients] **********************************************************
+2023-01-11 11:17:40,508 p=4082055 u=ansiadm n=ansible | TASK [Gathering Facts] ************************************************************************
+2023-01-11 11:17:52,639 p=4082055 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:17:52,640 p=4082055 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:17:54,699 p=4082055 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_test2 is using the discovered Python interpreter at
+/usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:17:54,699 p=4082055 u=ansiadm n=ansible | ok: [Anthony_test2]
+2023-01-11 11:17:54,768 p=4082055 u=ansiadm n=ansible | TASK [Create savevg image] ********************************************************************
+2023-01-11 11:17:54,834 p=4082055 u=ansiadm n=ansible | skipping: [Anthony_test2] => (item={'name': 'Anthony_test2', 'vg': 'datavg'}) 
+2023-01-11 11:18:27,487 p=4082055 u=ansiadm n=ansible | changed: [Anthony_nimserver] => (item={'name': 'Anthony_test2', 'vg': 'datavg'})
+2023-01-11 11:18:27,516 p=4082055 u=ansiadm n=ansible | TASK [Display the result of savevg] ***********************************************************
+2023-01-11 11:18:27,591 p=4082055 u=ansiadm n=ansible | ok: [Anthony_nimserver] => {
+    "msg": {
+        "changed": true,
+        "msg": "All items completed",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "accept_licenses": true,
+                        "action": "create",
+                        "boot_target": true,
+                        "bosinst_data": null,
+                        "exclude_files": null,
+                        "flags": null,
+                        "group": null,
+                        "location": null,
+                        "name": null,
+                        "name_postfix": "_savevg_20230111T111501",
+                        "name_prefix": null,
+                        "nim_node": null,
+                        "oslevel": null,
+                        "other_attributes": null,
+                        "remove_backup": false,
+                        "remove_spot": true,
+                        "shrink_fs": false,
+                        "spot_location": "/export/nim/spot",
+                        "spot_name": null,
+                        "spot_postfix": "_spot",
+                        "spot_prefix": null,
+                        "targets": [
+                            "Anthony_test2"
+                        ],
+                        "type": "savevg",
+                        "volume_group": "datavg"
+                    }
+                },
+                "item": {
+                    "name": "Anthony_test2",
+                    "vg": "datavg"
+                },
+                "meta": {
+                    "Anthony_test2": {
+                        "messages": [
+                            "savevg Anthony_test2_savevg_20230111T111501 created: /export/nim/savevg/Anthony_test2_savevg_20230111T111501."
+                        ],
+                        "res_name": "Anthony_test2_savevg_20230111T111501",
+                        "stderr": "",
+                        "stdout": "\n+---------------------------------------------------------------------+\n                System Backup Image Space Information\n              (Sizes are displayed in 1024-byte blocks.)\n+---------------------------------------------------------------------+\n\nRequired = 645 (1 MB)    Available = 146204404 (142778 MB)\n\n\n\nCreating information file for volume group datavg.\n\nCreating list of files to back up.\n\nBacking up 11 files\n\n11 of 11 files (100%)\n0512-038 savevg: Backup Completed Successfully.\n"
+                    },
+                    "messages": []
+                },
+                "msg": "NIM backup create operation successfull. See status and meta for details.",
+                "nim_node": {
+                    "standalone": {
+                        "Anthony_test2": {
+                            "Cstate": "ready for a NIM operation",
+                            "Mstate": "currently running",
+                            "cable_type1": "N/A",
+                            "class": "machines",
+                            "connect": "nimsh",
+                            "cpuid": "00F946614C00",
+                            "if1": "master_net Anthony_test2 36DC6D12DF20 ent0",
+                            "netboot_kernel": "up",
+                            "platform": "chrp",
+                            "prev_state": "currently running",
+                            "type": "standalone"
+                        }
+                    },
+                    "vios": {}
+                },
+                "status": {
+                    "Anthony_test2": "SUCCESS"
+                },
+                "stderr": "",
+                "stderr_lines": [],
+                "stdout": "",
+                "stdout_lines": [],
+                "targets": [
+                    "Anthony_test2"
+                ]
+            }
+        ],
+        "skipped": false
+    }
+}
+2023-01-11 11:18:27,642 p=4082055 u=ansiadm n=ansible | ok: [Anthony_test2] => {
+    "msg": {
+        "changed": false,
+        "msg": "All items skipped",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "item": {
+                    "name": "Anthony_test2",
+                    "vg": "datavg"
+                },
+                "skip_reason": "Conditional result was False",
+                "skipped": true
+            }
+        ],
+        "skipped": true
+    }
+}
+2023-01-11 11:18:27,728 p=4082055 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:18:27,728 p=4082055 u=ansiadm n=ansible | Anthony_nimserver          : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-01-11 11:18:27,728 p=4082055 u=ansiadm n=ansible | Anthony_test2              : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2023-01-11 11:20:25,249 p=4085227 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:20:25,274 p=4085227 u=ansiadm n=ansible | TASK [Output the savevg list to file ./vars/savevg_list.yaml and ./logfile/savevg_list.json] ***
+2023-01-11 11:20:25,298 p=4085227 u=ansiadm n=ansible | fatal: [Anthony_nimserver]: FAILED! => {"reason": "Could not find or access '/home/ansiadm/aixmanage/tasks/list_savevg.yaml' on the Ansible Controller."}
+2023-01-11 11:20:25,298 p=4085227 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:20:25,299 p=4085227 u=ansiadm n=ansible | Anthony_nimserver          : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-01-11 11:22:01,273 p=4086978 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:22:01,301 p=4086978 u=ansiadm n=ansible | TASK [Output the savevg list to file ./vars/savevg_list.yaml and ./logfile/savevg_list.json] ***
+2023-01-11 11:22:01,327 p=4086978 u=ansiadm n=ansible | included: /home/ansiadm/aixmanage/tasks/list_savevg.yaml for Anthony_nimserver
+2023-01-11 11:22:01,341 p=4086978 u=ansiadm n=ansible | TASK [List the savevg image] ******************************************************************
+2023-01-11 11:22:03,231 p=4086978 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:22:03,231 p=4086978 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:22:03,276 p=4086978 u=ansiadm n=ansible | TASK [Output savevg list to json logfile ./logfile/savevg_list.json] **************************
+2023-01-11 11:22:04,503 p=4086978 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:22:04,523 p=4086978 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml (first line)] **************
+2023-01-11 11:22:05,116 p=4086978 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:22:05,148 p=4086978 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml] ***************************
+2023-01-11 11:22:05,599 p=4086978 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1] => (item=Anthony_test2_savevg_20230111T111501)
+2023-01-11 11:22:05,621 p=4086978 u=ansiadm n=ansible | TASK [debug] **********************************************************************************
+2023-01-11 11:22:05,643 p=4086978 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "lsnim_result.stdout_lines": [
+        "Anthony_test2_savevg_20230111T111501"
+    ]
+}
+2023-01-11 11:22:05,669 p=4086978 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:22:05,670 p=4086978 u=ansiadm n=ansible | Anthony_nimserver          : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-01-11 11:41:28,629 p=4109094 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:41:28,665 p=4109094 u=ansiadm n=ansible | TASK [Make a list of savevg images in nim server] *********************************************
+2023-01-11 11:41:28,698 p=4109094 u=ansiadm n=ansible | included: /home/ansiadm/aixmanage/tasks/list_savevg.yaml for Anthony_nimserver
+2023-01-11 11:41:28,720 p=4109094 u=ansiadm n=ansible | TASK [List the savevg image] ******************************************************************
+2023-01-11 11:41:30,657 p=4109094 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:41:30,657 p=4109094 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:41:30,689 p=4109094 u=ansiadm n=ansible | TASK [Output savevg list to json logfile ./logfile/savevg_list.json] **************************
+2023-01-11 11:41:31,831 p=4109094 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:41:31,853 p=4109094 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml (first line)] **************
+2023-01-11 11:41:32,432 p=4109094 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:41:32,455 p=4109094 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml] ***************************
+2023-01-11 11:41:33,001 p=4109094 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1] => (item=Anthony_test2_savevg_20230111T111501)
+2023-01-11 11:41:33,020 p=4109094 u=ansiadm n=ansible | TASK [Check the list savevg images exist] *****************************************************
+2023-01-11 11:41:33,160 p=4109094 u=ansiadm n=ansible | ok: [Anthony_nimserver] => {
+    "msg": "There is no savevg images in NIM server"
+}
+2023-01-11 11:41:33,190 p=4109094 u=ansiadm n=ansible | TASK [pause] **********************************************************************************
+2023-01-11 11:41:33,248 p=4109443 u=ansiadm n=ansible | [pause]
+Delete savevg options:
+=====================================
+1 - Anthony_test2_savevg_20230111T111501
+:
+2023-01-11 11:41:36,154 p=4109094 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:41:36,176 p=4109094 u=ansiadm n=ansible | TASK [set_fact] *******************************************************************************
+2023-01-11 11:41:36,233 p=4109094 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:41:36,278 p=4109094 u=ansiadm n=ansible | TASK [display input] **************************************************************************
+2023-01-11 11:41:36,344 p=4109094 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "msg": "1"
+}
+2023-01-11 11:41:36,390 p=4109094 u=ansiadm n=ansible | TASK [Invalid option to delete savevg] ********************************************************
+2023-01-11 11:41:36,466 p=4109094 u=ansiadm n=ansible | fatal: [Anthony_nimserver -> 127.0.0.1]: FAILED! => {
+    "msg": "Do not delete savevg image since option invalid (not in menu range)"
+}
+2023-01-11 11:41:36,468 p=4109094 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:41:36,468 p=4109094 u=ansiadm n=ansible | Anthony_nimserver          : ok=9    changed=4    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-01-11 11:41:39,052 p=4109510 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:41:39,079 p=4109510 u=ansiadm n=ansible | TASK [Make a list of savevg images in nim server] *********************************************
+2023-01-11 11:41:39,105 p=4109510 u=ansiadm n=ansible | included: /home/ansiadm/aixmanage/tasks/list_savevg.yaml for Anthony_nimserver
+2023-01-11 11:41:39,121 p=4109510 u=ansiadm n=ansible | TASK [List the savevg image] ******************************************************************
+2023-01-11 11:41:40,335 p=4109510 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:41:40,335 p=4109510 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:41:40,372 p=4109510 u=ansiadm n=ansible | TASK [Output savevg list to json logfile ./logfile/savevg_list.json] **************************
+2023-01-11 11:41:41,458 p=4109510 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:41:41,479 p=4109510 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml (first line)] **************
+2023-01-11 11:41:42,005 p=4109510 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:41:42,028 p=4109510 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml] ***************************
+2023-01-11 11:41:42,535 p=4109510 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1] => (item=Anthony_test2_savevg_20230111T111501)
+2023-01-11 11:41:42,547 p=4109510 u=ansiadm n=ansible | TASK [Check the list savevg images exist] *****************************************************
+2023-01-11 11:41:42,600 p=4109510 u=ansiadm n=ansible | ok: [Anthony_nimserver] => {
+    "msg": "There is no savevg images in NIM server"
+}
+2023-01-11 11:41:42,616 p=4109510 u=ansiadm n=ansible | TASK [pause] **********************************************************************************
+2023-01-11 11:41:42,668 p=4109605 u=ansiadm n=ansible | [pause]
+Delete savevg options:
+=====================================
+1 - Anthony_test2_savevg_20230111T111501
+:
+2023-01-11 11:41:46,026 p=4109510 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:41:46,041 p=4109510 u=ansiadm n=ansible | TASK [set_fact] *******************************************************************************
+2023-01-11 11:41:46,075 p=4109510 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:41:46,110 p=4109510 u=ansiadm n=ansible | TASK [display input] **************************************************************************
+2023-01-11 11:41:46,151 p=4109510 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "msg": "-1"
+}
+2023-01-11 11:41:46,180 p=4109510 u=ansiadm n=ansible | TASK [Invalid option to delete savevg] ********************************************************
+2023-01-11 11:41:46,245 p=4109510 u=ansiadm n=ansible | fatal: [Anthony_nimserver -> 127.0.0.1]: FAILED! => {
+    "msg": "Do not delete savevg image since option invalid (not in menu range)"
+}
+2023-01-11 11:41:46,247 p=4109510 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:41:46,247 p=4109510 u=ansiadm n=ansible | Anthony_nimserver          : ok=9    changed=4    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-01-11 11:41:48,233 p=4109770 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:41:48,260 p=4109770 u=ansiadm n=ansible | TASK [Make a list of savevg images in nim server] *********************************************
+2023-01-11 11:41:48,286 p=4109770 u=ansiadm n=ansible | included: /home/ansiadm/aixmanage/tasks/list_savevg.yaml for Anthony_nimserver
+2023-01-11 11:41:48,303 p=4109770 u=ansiadm n=ansible | TASK [List the savevg image] ******************************************************************
+2023-01-11 11:41:49,576 p=4109770 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:41:49,576 p=4109770 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:41:49,616 p=4109770 u=ansiadm n=ansible | TASK [Output savevg list to json logfile ./logfile/savevg_list.json] **************************
+2023-01-11 11:41:50,607 p=4109770 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:41:50,643 p=4109770 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml (first line)] **************
+2023-01-11 11:41:51,309 p=4109770 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:41:51,332 p=4109770 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml] ***************************
+2023-01-11 11:41:51,862 p=4109770 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1] => (item=Anthony_test2_savevg_20230111T111501)
+2023-01-11 11:41:51,876 p=4109770 u=ansiadm n=ansible | TASK [Check the list savevg images exist] *****************************************************
+2023-01-11 11:41:51,928 p=4109770 u=ansiadm n=ansible | ok: [Anthony_nimserver] => {
+    "msg": "There is no savevg images in NIM server"
+}
+2023-01-11 11:41:51,940 p=4109770 u=ansiadm n=ansible | TASK [pause] **********************************************************************************
+2023-01-11 11:41:51,975 p=4109873 u=ansiadm n=ansible | [pause]
+Delete savevg options:
+=====================================
+1 - Anthony_test2_savevg_20230111T111501
+:
+2023-01-11 11:41:57,236 p=4109770 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:41:57,256 p=4109770 u=ansiadm n=ansible | TASK [set_fact] *******************************************************************************
+2023-01-11 11:41:57,306 p=4109770 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:41:57,346 p=4109770 u=ansiadm n=ansible | TASK [display input] **************************************************************************
+2023-01-11 11:41:57,406 p=4109770 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "msg": "0"
+}
+2023-01-11 11:41:57,446 p=4109770 u=ansiadm n=ansible | TASK [Invalid option to delete savevg] ********************************************************
+2023-01-11 11:41:57,512 p=4109770 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "msg": "Do not delete savevg image since option invalid (not in menu range)"
+}
+2023-01-11 11:41:57,533 p=4109770 u=ansiadm n=ansible | TASK [pause] **********************************************************************************
+2023-01-11 11:41:57,617 p=4109896 u=ansiadm n=ansible | [pause]
+Do you want to delete Anthony_test2_savevg_20230111T111501 (yes/no)?:
+2023-01-11 11:41:59,569 p=4109770 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:41:59,601 p=4109770 u=ansiadm n=ansible | TASK [Start to delete the savevg] *************************************************************
+2023-01-11 11:41:59,650 p=4109770 u=ansiadm n=ansible | skipping: [Anthony_nimserver]
+2023-01-11 11:41:59,672 p=4109770 u=ansiadm n=ansible | TASK [Deny to delete savevg] ******************************************************************
+2023-01-11 11:41:59,762 p=4109770 u=ansiadm n=ansible | ok: [Anthony_nimserver] => {
+    "msg": "Do not delete savevg image since do not choose 'yes' to confirm "
+}
+2023-01-11 11:41:59,806 p=4109770 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:41:59,806 p=4109770 u=ansiadm n=ansible | Anthony_nimserver          : ok=12   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2023-01-11 11:42:02,792 p=4110157 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:42:02,822 p=4110157 u=ansiadm n=ansible | TASK [Make a list of savevg images in nim server] *********************************************
+2023-01-11 11:42:02,869 p=4110157 u=ansiadm n=ansible | included: /home/ansiadm/aixmanage/tasks/list_savevg.yaml for Anthony_nimserver
+2023-01-11 11:42:02,909 p=4110157 u=ansiadm n=ansible | TASK [List the savevg image] ******************************************************************
+2023-01-11 11:42:04,304 p=4110157 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:42:04,304 p=4110157 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:42:04,343 p=4110157 u=ansiadm n=ansible | TASK [Output savevg list to json logfile ./logfile/savevg_list.json] **************************
+2023-01-11 11:42:05,217 p=4110157 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:42:05,238 p=4110157 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml (first line)] **************
+2023-01-11 11:42:05,856 p=4110157 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:42:05,882 p=4110157 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml] ***************************
+2023-01-11 11:42:06,396 p=4110157 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1] => (item=Anthony_test2_savevg_20230111T111501)
+2023-01-11 11:42:06,408 p=4110157 u=ansiadm n=ansible | TASK [Check the list savevg images exist] *****************************************************
+2023-01-11 11:42:06,462 p=4110157 u=ansiadm n=ansible | ok: [Anthony_nimserver] => {
+    "msg": "There is no savevg images in NIM server"
+}
+2023-01-11 11:42:06,477 p=4110157 u=ansiadm n=ansible | TASK [pause] **********************************************************************************
+2023-01-11 11:42:06,527 p=4110447 u=ansiadm n=ansible | [pause]
+Delete savevg options:
+=====================================
+1 - Anthony_test2_savevg_20230111T111501
+:
+2023-01-11 11:42:07,553 p=4110157 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:42:07,574 p=4110157 u=ansiadm n=ansible | TASK [set_fact] *******************************************************************************
+2023-01-11 11:42:07,630 p=4110157 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:42:07,665 p=4110157 u=ansiadm n=ansible | TASK [display input] **************************************************************************
+2023-01-11 11:42:07,717 p=4110157 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "msg": "0"
+}
+2023-01-11 11:42:07,757 p=4110157 u=ansiadm n=ansible | TASK [Invalid option to delete savevg] ********************************************************
+2023-01-11 11:42:07,823 p=4110157 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "msg": "Do not delete savevg image since option invalid (not in menu range)"
+}
+2023-01-11 11:42:07,844 p=4110157 u=ansiadm n=ansible | TASK [pause] **********************************************************************************
+2023-01-11 11:42:07,926 p=4110455 u=ansiadm n=ansible | [pause]
+Do you want to delete Anthony_test2_savevg_20230111T111501 (yes/no)?:
+2023-01-11 11:42:10,454 p=4110157 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:42:10,475 p=4110157 u=ansiadm n=ansible | TASK [Start to delete the savevg] *************************************************************
+2023-01-11 11:42:11,807 p=4110157 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:42:11,823 p=4110157 u=ansiadm n=ansible | TASK [Deny to delete savevg] ******************************************************************
+2023-01-11 11:42:11,854 p=4110157 u=ansiadm n=ansible | skipping: [Anthony_nimserver]
+2023-01-11 11:42:11,894 p=4110157 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:42:11,894 p=4110157 u=ansiadm n=ansible | Anthony_nimserver          : ok=12   changed=5    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2023-01-11 11:42:15,013 p=4110480 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:42:15,040 p=4110480 u=ansiadm n=ansible | TASK [Make a list of savevg images in nim server] *********************************************
+2023-01-11 11:42:15,066 p=4110480 u=ansiadm n=ansible | included: /home/ansiadm/aixmanage/tasks/list_savevg.yaml for Anthony_nimserver
+2023-01-11 11:42:15,082 p=4110480 u=ansiadm n=ansible | TASK [List the savevg image] ******************************************************************
+2023-01-11 11:42:16,394 p=4110480 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:42:16,394 p=4110480 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:42:16,435 p=4110480 u=ansiadm n=ansible | TASK [Output savevg list to json logfile ./logfile/savevg_list.json] **************************
+2023-01-11 11:42:17,365 p=4110480 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:42:17,386 p=4110480 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml (first line)] **************
+2023-01-11 11:42:17,910 p=4110480 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:42:17,922 p=4110480 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml] ***************************
+2023-01-11 11:42:17,942 p=4110480 u=ansiadm n=ansible | TASK [Check the list savevg images exist] *****************************************************
+2023-01-11 11:42:17,999 p=4110480 u=ansiadm n=ansible | fatal: [Anthony_nimserver]: FAILED! => {
+    "msg": "There is no savevg images in NIM server"
+}
+2023-01-11 11:42:18,000 p=4110480 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:42:18,000 p=4110480 u=ansiadm n=ansible | Anthony_nimserver          : ok=4    changed=3    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+2023-01-11 11:42:33,379 p=4111006 u=ansiadm n=ansible | PLAY [Create NIM backup for clients] **********************************************************
+2023-01-11 11:42:33,394 p=4111006 u=ansiadm n=ansible | TASK [Gathering Facts] ************************************************************************
+2023-01-11 11:42:44,632 p=4111006 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:42:44,632 p=4111006 u=ansiadm n=ansible | ok: [Anthony_nimserver]
+2023-01-11 11:42:46,657 p=4111006 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_test2 is using the discovered Python interpreter at
+/usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:42:46,657 p=4111006 u=ansiadm n=ansible | ok: [Anthony_test2]
+2023-01-11 11:42:46,700 p=4111006 u=ansiadm n=ansible | TASK [Create savevg image] ********************************************************************
+2023-01-11 11:42:46,745 p=4111006 u=ansiadm n=ansible | skipping: [Anthony_test2] => (item={'name': 'Anthony_test2', 'vg': 'datavg'}) 
+2023-01-11 11:43:23,234 p=4111006 u=ansiadm n=ansible | changed: [Anthony_nimserver] => (item={'name': 'Anthony_test2', 'vg': 'datavg'})
+2023-01-11 11:43:23,262 p=4111006 u=ansiadm n=ansible | TASK [Display the result of savevg] ***********************************************************
+2023-01-11 11:43:23,344 p=4111006 u=ansiadm n=ansible | ok: [Anthony_nimserver] => {
+    "msg": {
+        "changed": true,
+        "msg": "All items completed",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "accept_licenses": true,
+                        "action": "create",
+                        "boot_target": true,
+                        "bosinst_data": null,
+                        "exclude_files": null,
+                        "flags": null,
+                        "group": null,
+                        "location": null,
+                        "name": null,
+                        "name_postfix": "_savevg_20230111T113953",
+                        "name_prefix": null,
+                        "nim_node": null,
+                        "oslevel": null,
+                        "other_attributes": null,
+                        "remove_backup": false,
+                        "remove_spot": true,
+                        "shrink_fs": false,
+                        "spot_location": "/export/nim/spot",
+                        "spot_name": null,
+                        "spot_postfix": "_spot",
+                        "spot_prefix": null,
+                        "targets": [
+                            "Anthony_test2"
+                        ],
+                        "type": "savevg",
+                        "volume_group": "datavg"
+                    }
+                },
+                "item": {
+                    "name": "Anthony_test2",
+                    "vg": "datavg"
+                },
+                "meta": {
+                    "Anthony_test2": {
+                        "messages": [
+                            "savevg Anthony_test2_savevg_20230111T113953 created: /export/nim/savevg/Anthony_test2_savevg_20230111T113953."
+                        ],
+                        "res_name": "Anthony_test2_savevg_20230111T113953",
+                        "stderr": "",
+                        "stdout": "\n+---------------------------------------------------------------------+\n                System Backup Image Space Information\n              (Sizes are displayed in 1024-byte blocks.)\n+---------------------------------------------------------------------+\n\nRequired = 645 (1 MB)    Available = 146204352 (142778 MB)\n\n\n\nCreating list of files to back up.\n\nBacking up 11 files\n\n11 of 11 files (100%)\n0512-038 savevg: Backup Completed Successfully.\n"
+                    },
+                    "messages": []
+                },
+                "msg": "NIM backup create operation successfull. See status and meta for details.",
+                "nim_node": {
+                    "standalone": {
+                        "Anthony_test2": {
+                            "Cstate": "ready for a NIM operation",
+                            "Mstate": "currently running",
+                            "cable_type1": "N/A",
+                            "class": "machines",
+                            "connect": "nimsh",
+                            "cpuid": "00F946614C00",
+                            "if1": "master_net Anthony_test2 36DC6D12DF20 ent0",
+                            "netboot_kernel": "up",
+                            "platform": "chrp",
+                            "prev_state": "currently running",
+                            "type": "standalone"
+                        }
+                    },
+                    "vios": {}
+                },
+                "status": {
+                    "Anthony_test2": "SUCCESS"
+                },
+                "stderr": "",
+                "stderr_lines": [],
+                "stdout": "",
+                "stdout_lines": [],
+                "targets": [
+                    "Anthony_test2"
+                ]
+            }
+        ],
+        "skipped": false
+    }
+}
+2023-01-11 11:43:23,369 p=4111006 u=ansiadm n=ansible | ok: [Anthony_test2] => {
+    "msg": {
+        "changed": false,
+        "msg": "All items skipped",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "item": {
+                    "name": "Anthony_test2",
+                    "vg": "datavg"
+                },
+                "skip_reason": "Conditional result was False",
+                "skipped": true
+            }
+        ],
+        "skipped": true
+    }
+}
+2023-01-11 11:43:23,421 p=4111006 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:43:23,421 p=4111006 u=ansiadm n=ansible | Anthony_nimserver          : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-01-11 11:43:23,421 p=4111006 u=ansiadm n=ansible | Anthony_test2              : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2023-01-11 11:57:28,467 p=4127279 u=ansiadm n=ansible | PLAY [NIM management] *************************************************************************
+2023-01-11 11:57:28,503 p=4127279 u=ansiadm n=ansible | TASK [Output the savevg list to file ./vars/savevg_list.yaml and ./logfile/savevg_list.json] ***
+2023-01-11 11:57:28,545 p=4127279 u=ansiadm n=ansible | included: /home/ansiadm/aixmanage/tasks/list_savevg.yaml for Anthony_nimserver
+2023-01-11 11:57:28,566 p=4127279 u=ansiadm n=ansible | TASK [List the savevg image] ******************************************************************
+2023-01-11 11:57:30,477 p=4127279 u=ansiadm n=ansible | [WARNING]: Platform aix on host Anthony_nimserver is using the discovered Python interpreter
+at /usr/bin/python, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.13/reference_appendices/interpreter_discovery.html for more information.
+
+2023-01-11 11:57:30,477 p=4127279 u=ansiadm n=ansible | changed: [Anthony_nimserver]
+2023-01-11 11:57:30,505 p=4127279 u=ansiadm n=ansible | TASK [Output savevg list to json logfile ./logfile/savevg_list.json] **************************
+2023-01-11 11:57:31,517 p=4127279 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:57:31,537 p=4127279 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml (first line)] **************
+2023-01-11 11:57:32,187 p=4127279 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1]
+2023-01-11 11:57:32,210 p=4127279 u=ansiadm n=ansible | TASK [Output savevg list to menu yaml file ./vars/savevg_list.yaml] ***************************
+2023-01-11 11:57:32,684 p=4127279 u=ansiadm n=ansible | changed: [Anthony_nimserver -> 127.0.0.1] => (item=Anthony_test2_savevg_20230111T113953)
+2023-01-11 11:57:32,706 p=4127279 u=ansiadm n=ansible | TASK [debug] **********************************************************************************
+2023-01-11 11:57:32,726 p=4127279 u=ansiadm n=ansible | ok: [Anthony_nimserver -> 127.0.0.1] => {
+    "lsnim_result.stdout_lines": [
+        "Anthony_test2_savevg_20230111T113953"
+    ]
+}
+2023-01-11 11:57:32,750 p=4127279 u=ansiadm n=ansible | PLAY RECAP ************************************************************************************
+2023-01-11 11:57:32,750 p=4127279 u=ansiadm n=ansible | Anthony_nimserver          : ok=6    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

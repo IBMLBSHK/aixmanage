@@ -16,8 +16,6 @@
 4. NIM management
     - Add / Remove NIM client
     - Create / Delete / List Lpp Soure / Spot / mksysb / savevg
-    - Create / Delete / List VIOS mksysb
-    - Update / Upgrade OS version / patch
 5. File management
     - Check file consistent
     - Sync files
