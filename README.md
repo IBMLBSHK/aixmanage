@@ -21,5 +21,4 @@
     - Sync files
 6. Disk clone management
     - Alt disk clone
-    - Mirror disk
-    - Unmirror disk
+    - Clean Alt disk

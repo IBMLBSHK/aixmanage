@@ -1,0 +1,27 @@
+---
+- name: Create NIM backup for clients
+  hosts: all
+  collections: 
+    - ibm.power_aix
+  vars_files:
+    - "./vars/nim_savevg_list.yaml"
+    - "./vars/nim_master.yaml"
+  vars:
+    cur_time: "{{ ansible_date_time.iso8601_basic_short }}"
+  tasks:
+  - name: Create savevg image
+    vars:
+      postfixtime: "_savevg_{{ cur_time }}"
+    nim_backup:
+      action: create
+      type: savevg
+      targets: "{{ item.name }}"
+      name_postfix: "{{ postfixtime }}"
+      volume_group: "{{ item.vg }}"
+    register: savevg_result
+    loop: "{{ nim_client }}"
+    when: inventory_hostname == nim_master.name
+
+  - name: Display the result of savevg
+    debug:
+      msg: "{{ savevg_result }}"
